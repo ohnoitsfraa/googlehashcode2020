@@ -1,0 +1,25 @@
+{
+  "name": "googlehashcode2020",
+  "version": "1.0.0",
+  "description": "googlehashcode2020",
+  "main": "index.js",
+  "scripts": {
+    "go": "node src/index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ohnoitsfraa/googlehashcode2020.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ohnoitsfraa/googlehashcode2020/issues"
+  },
+  "homepage": "https://github.com/ohnoitsfraa/googlehashcode2020#readme",
+  "dependencies": {
+    "@types/node": "^13.7.1",
+    "chalk": "^3.0.0",
+    "lodash": "^4.17.15",
+    "minimist": "^1.2.0"
+  }
+}
