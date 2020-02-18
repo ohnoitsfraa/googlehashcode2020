@@ -3,14 +3,17 @@ const chalk = require('chalk');
 const fs = require('fs');
 const path = require('path');
 const mkdirp = require('mkdirp');
+const { execFile } = require('child_process');
 const log = console.log;
+const questionArg = 'question';
+const inputArg = 'input';
 const lineSeparator = '\n';
 const dataSeparator = ' ';
 const extensionIn = '.in';
 const extensionOut = '.out';
 
 const quiz = async () => {
-    if (argv && argv.hasOwnProperty('question') && argv.hasOwnProperty('input')) {
+    if (argv && argv.hasOwnProperty(questionArg) && argv.hasOwnProperty(inputArg)) {
         const questionNumber = argv.question;
         const input = argv.input;
         const inputPath = `./data/input/${questionNumber}/${input}${!input.includes(extensionIn) ? extensionIn : ''}`;
@@ -28,7 +31,8 @@ const quiz = async () => {
                 }
                 const answerFilePath = `${answerFolderPath}${input.replace(extensionIn, '')}${extensionOut}`;
                 fs.writeFileSync(answerFilePath, answer);
-                log(chalk.green(`Output written to ${answerFilePath}`))
+                const {error, stdout, stderr} = await execFile('code', [answerFilePath]);
+                log(chalk.green(`Output written to ${answerFilePath}`));
             } else {
                 log(chalk.red(`Question file does not exist (${questionPath})`));
             }
