@@ -29,4 +29,8 @@ To make sure the output file opens in VS Code, add the code command to your path
 - Search for **'shell'**
 - Pick **'Shell Command: Install 'code' command in PATH'**
 
+Optionally you can also add the --open if you want to manually disable the opening of the output file, e.g.:
+
+**npm run go -- --question practice-problem --input a_example --open false**
+
 And lastly, for convenience I've already added lodash the package.json, which you can of course use for certain utility functions. Feel free to fork this repository and add your own public libraries.

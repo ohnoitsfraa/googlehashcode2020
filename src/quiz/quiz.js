@@ -6,6 +6,7 @@ const mkdirp = require('mkdirp');
 const { execFile } = require('child_process');
 const log = console.log;
 const questionArg = 'question';
+const openArg = 'open';
 const inputArg = 'input';
 const lineSeparator = '\n';
 const dataSeparator = ' ';
@@ -31,7 +32,9 @@ const quiz = async () => {
                 }
                 const answerFilePath = `${answerFolderPath}${input.replace(extensionIn, '')}${extensionOut}`;
                 fs.writeFileSync(answerFilePath, answer);
-                const {error, stdout, stderr} = await execFile('code', [answerFilePath]);
+                if (!argv.hasOwnProperty(openArg) || (argv.hasOwnProperty(openArg) && argv.openArg)) {
+                    const { error, stdout, stderr } = await execFile('code', [answerFilePath]);
+                }
                 log(chalk.green(`Output written to ${answerFilePath}`));
             } else {
                 log(chalk.red(`Question file does not exist (${questionPath})`));
