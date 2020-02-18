@@ -2,11 +2,12 @@ const argv = require('minimist')(process.argv);
 const chalk = require('chalk');
 const fs = require('fs');
 const path = require('path');
+const mkdirp = require('mkdirp');
 const log = console.log;
 const lineSeparator = '\n';
 const dataSeparator = ' ';
 
-const quiz = () => {
+const quiz = async () => {
     if (argv && argv.hasOwnProperty('question') && argv.hasOwnProperty('input')) {
         const questionNumber = argv.question;
         const input = argv.input;
@@ -21,7 +22,7 @@ const quiz = () => {
                 const answer = question(data);
                 const answerFolderPath = `./data/output/${questionNumber}/`;
                 if (!fs.existsSync(answerFolderPath)) {
-                    fs.mkdir(answerFolderPath, () => { });
+                    await mkdirp(answerFolderPath);
                 }
                 const answerFilePath = `${answerFolderPath}${input}.out`;
                 fs.writeFileSync(answerFilePath, answer);
