@@ -6,12 +6,14 @@ const mkdirp = require('mkdirp');
 const log = console.log;
 const lineSeparator = '\n';
 const dataSeparator = ' ';
+const extensionIn = '.in';
+const extensionOut = '.out';
 
 const quiz = async () => {
     if (argv && argv.hasOwnProperty('question') && argv.hasOwnProperty('input')) {
         const questionNumber = argv.question;
         const input = argv.input;
-        const inputPath = `./data/input/${questionNumber}/${input}.in`;
+        const inputPath = `./data/input/${questionNumber}/${input}${!input.includes(extensionIn) ? extensionIn : ''}`;
         if (fs.existsSync(inputPath)) {
             const file = fs.readFileSync(inputPath);
             const data = file.toString().trim().split(lineSeparator).map(line => line.split(dataSeparator));
@@ -24,7 +26,7 @@ const quiz = async () => {
                 if (!fs.existsSync(answerFolderPath)) {
                     await mkdirp(answerFolderPath);
                 }
-                const answerFilePath = `${answerFolderPath}${input}.out`;
+                const answerFilePath = `${answerFolderPath}${input.replace(extensionIn, '')}${extensionOut}`;
                 fs.writeFileSync(answerFilePath, answer);
                 log(chalk.green(`Output written to ${answerFilePath}`))
             } else {
