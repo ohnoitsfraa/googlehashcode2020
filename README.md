@@ -1,6 +1,6 @@
 # Google HashCode 2020
 
-This repository can be used on the day of the HashCode event to solve the question(s).
+This repository can be used on the day of the Google HashCode event to solve the question(s).
 Just add the dataset files (.in) to the data/input/ directory, the files of each question should be in their own folder, e.g.:
 
 **data/input/0/a_example.in**
@@ -20,6 +20,8 @@ Each processor has a parameter input which will consist of the dataset file alre
 The output file be opened in code and will be written to data/output, e.g.:
 
  **data/output/0/a_example.out**
+
+This output file can then be uploaded to the Judge System: (https://hashcodejudge.withgoogle.com/)
 
 To make sure the output file opens in VS Code, add the code command to your path:
 
