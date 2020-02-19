@@ -1,37 +1,47 @@
 const _ = require('lodash');
 
-const findMaxArray = (array) => array.reduce((iMax, x, i, arr) => x > arr[iMax] ? i : iMax, 0);
-
-const processSum = (sum, otherSlice, index, tempSolutions) => {
-    tempSolutions[index].push(otherSlice);
-    sum += otherSlice;
-}
-
-module.exports = (input) => {
+const solve = (input) => {
     const numbers = input.map(line => line.map(x => x = +x));
-    const max = numbers[0][0];
-    const typesOfPizza = numbers[0][1];
+    const maxSlices = numbers[0][0];
+    const amountOfPizzas = numbers[1].length;
     const slicesPerType = numbers[1];
-    let tempSolutions = [];
-    let solutions = [];
+    let currentIndex;
+    let solution = [];
+    let total = 0;
 
-    slicesPerType.forEach((slicesPerPizza, index) => {
-        const otherSlicesPerType = slicesPerType.filter((slices, slicesIndex) => slicesIndex !== index);
-        let sum = slicesPerPizza;
-        tempSolutions[index] = [slicesPerPizza];
-        let breakLoop = false;
-        _.sortBy(otherSlicesPerType).reverse().forEach(otherSlice => {
-            const tempSum = sum + otherSlice;
-            breakLoop = tempSum === max;
-            if (tempSum <= max) {
-                processSum(sum, otherSlice, index, tempSolutions);
+    // Go through each pizza type
+    for (let pizzaIndex = amountOfPizzas - 1; pizzaIndex >= 0; pizzaIndex--) {
+        let sumPerPizza = 0;
+        currentIndex = pizzaIndex;
+        let tempSolution = [];
+
+        // Go through each pizza type, except the pizza types with smaller slice count the current one
+        for (let otherSliceIndex = currentIndex; otherSliceIndex >= 0; otherSliceIndex--) {
+            const amountOfSlices = slicesPerType[otherSliceIndex];
+            let sumWithNextElement = sumPerPizza + amountOfSlices;
+
+            if (sumWithNextElement === maxSlices) {
+                // Stop looking if you already found the best solution
+                sumPerPizza = sumWithNextElement;
+                tempSolution.unshift(otherSliceIndex);
+                break;
+            } else if (sumWithNextElement <= maxSlices) {
+                // Add the current solution if you haven't found the best one yet
+                sumPerPizza = sumWithNextElement;
+                tempSolution.unshift(otherSliceIndex);
+            } else {
+                // Solutions higher than the max amount of slices should be discarded
+                continue;
             }
-        });
-        solutions.push(tempSolutions.map(tempSolution => _.sortBy(tempSolution)));
-        if (breakLoop) {
-            return;
         }
-    });
-    const solution = _.flatten(solutions)[findMaxArray(_.flatten(solutions.map(sol => sol.map(sol => _.sum(sol)))))];
-    return `${solution.length}\n${solution.join(' ')}`;
+
+        // Stop when the best solution is found in the inner loop
+        if (total < sumPerPizza) {
+            total = sumPerPizza;
+            solution = tempSolution;
+        }
+    }
+    return `${solution.length}\n${solution.join(' ')}`
 }
+
+module.exports = (input) => solve(input);
