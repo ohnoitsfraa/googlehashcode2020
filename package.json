@@ -4,7 +4,8 @@
   "description": "googlehashcode2020",
   "main": "index.js",
   "scripts": {
-    "go": "node src/index"
+    "go": "node src/index",
+    "zip": "zip -r ./data/output/output.zip ./ -x '*node_modules*'"
   },
   "repository": {
     "type": "git",
