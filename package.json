@@ -22,7 +22,7 @@
     "chalk": "^3.0.0",
     "exec": "^0.2.1",
     "lodash": "^4.17.15",
-    "minimist": "^1.2.0",
+    "minimist": "^1.2.3",
     "mkdirp": "^1.0.3",
     "javascript-algorithms": "trekhleb/javascript-algorithms"
   }
